@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {NavComponent} from './components/nav/nav.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -22,6 +21,12 @@ import {JwtModule} from '@auth0/angular-jwt';
 import { MemberDetailComponent } from './components/members/member-detail/member-detail.component';
 import {MemberDetailResolver} from './resolvers/member-detail.resolver';
 import {MembersResolver} from './resolvers/members.resolver';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { MemberUpdateComponent } from './components/members/member-update/member-update.component';
+import {MemberUpdateResolver} from './resolvers/mermber-update.resolver';
+import { PhotoEditorComponent } from './components/members/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 // tslint:disable-next-line:typedef
 export function tokenGetter() {
@@ -38,15 +43,20 @@ export function tokenGetter() {
     MessagesComponent,
     ListsComponent,
     MemberCardComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    MemberUpdateComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    FileUploadModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
+    TabsModule.forRoot(),
+    NgxGalleryModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
@@ -60,7 +70,8 @@ export function tokenGetter() {
     ErrorInterceptorProvider,
     AlertifyService,
     MemberDetailResolver,
-    MembersResolver
+    MembersResolver,
+    MemberUpdateResolver
   ],
   bootstrap: [AppComponent]
 })
