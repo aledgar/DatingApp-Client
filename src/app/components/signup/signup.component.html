@@ -1,16 +1,179 @@
 <div class="row">
   <div class="col-4 m-auto">
-    <form #signupForm="ngForm" (ngSubmit)="signUp()">
+    <form [formGroup]="registerForm" (ngSubmit)="signUp()">
       <div class="form-group">
         <label>Email address</label>
-        <input type="email" [(ngModel)]="model.email" name="email" class="form-control" required>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <input type="email"
+               formControlName="email"
+               [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('email').errors &&
+                    registerForm.get('email').touched
+                }"
+               name="email"
+               class="form-control"
+        >
+        <div
+          class="invalid-feedback"
+          *ngIf="
+          registerForm.get('email').touched &&
+          registerForm.get('email').hasError('required')
+        ">
+          Email is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" style="margin-right:10px">I am a: </label>
+        <label class="radio-inline">
+          <input
+            class="mr-3"
+            type="radio"
+            value="male"
+            formControlName="gender"
+          />Male
+        </label>
+        <label class="radio-inline ml-3">
+          <input
+            class="mr-3"
+            type="radio"
+            value="female"
+            formControlName="gender"
+          />Female
+        </label>
+      </div>
+      <div class="form-group">
+        <label>Known as:</label>
+        <input type="text"
+               class="form-control"
+               [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('knownAs').errors &&
+                    registerForm.get('knownAs').touched
+                }"
+               formControlName="knownAs">
+        <div
+          class="invalid-feedback"
+          *ngIf="
+        registerForm.get('knownAs').touched &&
+        registerForm.get('knownAs').hasError('required')
+        ">
+          Known as is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Date of birth:</label>
+        <input type="text"
+               [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('dateOfBirth').errors &&
+                    registerForm.get('dateOfBirth').touched
+                }"
+               class="form-control"
+               formControlName="dateOfBirth"
+               bsDatepicker [bsConfig]="bsConfig">
+        <div
+          class="invalid-feedback"
+          *ngIf="
+        registerForm.get('dateOfBirth').touched &&
+        registerForm.get('dateOfBirth').hasError('required')
+        ">
+          Date of birth is required
+        </div>
+      </div>
+      <div class="form-group d-flex justify-content-between">
+        <div>
+          <label>Country:</label>
+          <input
+            type="text"
+            name="country"
+            [ngClass]="{
+                'is-invalid':
+                  registerForm.get('country').errors &&
+                  registerForm.get('country').touched
+            }"
+            class="form-control"
+            formControlName="country">
+          <div
+            class="invalid-feedback"
+            *ngIf="
+        registerForm.get('country').touched &&
+        registerForm.get('country').hasError('required')
+        ">
+            Country is required
+          </div>
+        </div>
+        <div>
+          <label>City:</label>
+          <input
+            type="text"
+            name="city"
+            [ngClass]="{
+              'is-invalid':
+                registerForm.get('city').errors &&
+                registerForm.get('city').touched
+            }"
+            class="form-control"
+            formControlName="city">
+          <div
+            class="invalid-feedback"
+            *ngIf="
+          registerForm.get('city').touched &&
+          registerForm.get('city').hasError('required')
+          ">
+            City is required
+          </div>
+        </div>
+
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" [(ngModel)]="model.password" name="password" class="form-control" required>
+        <input type="password"
+               formControlName="password"
+               name="password"
+               [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('password').errors &&
+                    registerForm.get('password').touched
+                }"
+               class="form-control">
+        <div
+          class="invalid-feedback"
+          *ngIf="
+        registerForm.get('password').touched &&
+        registerForm.get('password').hasError('required')
+        ">
+          The password is required
+        </div>
+        <div
+          class="invalid-feedback"
+          *ngIf="
+          registerForm.get('password').invalid
+        ">
+          The length of the password is between 4 and 6 characters
+        </div>
       </div>
-      <button type="submit" [disabled]="!signupForm.valid" class="btn btn-success btn-block">Sign up</button>
+      <div class="form-group">
+        <label>Confirm password</label>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          name="confirmPassword"
+          [ngClass]="{
+                  'is-invalid':
+                    registerForm.get('confirmPassword').errors &&
+                    registerForm.get('confirmPassword').touched
+          }"
+          class="form-control">
+        <div
+          class="invalid-feedback"
+          *ngIf="
+        registerForm.get('confirmPassword').touched &&
+        registerForm.get('confirmPassword').hasError('required')
+        ">
+          The comfirmation of the password is required
+        </div>
+      </div>
+      <button type="submit" [disabled]="!registerForm.valid" class="btn btn-success btn-block mb-3">Sign up</button>
       <button class="btn btn-secondary btn-block" (click)="cancel()">Cancel</button>
     </form>
   </div>

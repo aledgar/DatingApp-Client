@@ -11,6 +11,7 @@ import {MemberUpdateComponent} from './components/members/member-update/member-u
 import {MemberUpdateResolver} from './resolvers/mermber-update.resolver';
 import {PreventUnsavedChangesGuard} from './guards/prevent-unsaved-changes.guard';
 import {UpdateMemberGuard} from './guards/update-member.guard';
+import {ListResolver} from './resolvers/list.resolver';
 
 
 export const appRoutes: Routes = [
@@ -30,7 +31,7 @@ export const appRoutes: Routes = [
         resolve: {user: MemberUpdateResolver}
       },
       {path: 'messages', component: MessagesComponent},
-      {path: 'lists', component: ListsComponent}
+      {path: 'lists', component: ListsComponent, resolve: {users: ListResolver}}
     ]
   },
   {path: '**', redirectTo: '', pathMatch: 'full'}

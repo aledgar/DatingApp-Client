@@ -1,7 +1,54 @@
 <div class="container">
+  <div class="row mb-3">
+    <div class="col-12 text-center">
+      <h3>Members</h3>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <form #filterForm="ngForm" class="form-inline col-12" (ngSubmit)="loadInfo(paginationInfo.currentPage)">
+      <div class="col-md-2 col-sm-12 p-0 d-flex flex-column">
+        <label class="text-primary font-weight-light mb-1 d-block" style="font-size: 16px">Items per page: </label>
+        <select class="form-control mr-md-2 col-12" name="sItemsPerPage" [(ngModel)]="paramItemsPerPage">
+          <option value="8">8</option>
+          <option value="12">12</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <div class="col-md-2 mr-md-2 col-sm-12 p-0 d-flex flex-column">
+        <label class="text-primary font-weight-light mb-1 d-block" style="font-size: 16px">Age min: </label>
+        <input type="number" min="18" class="form-control col-12" name="minAge" [(ngModel)]="minAge" />
+      </div>
+      <div class="col-md-2 mr-md-2 col-sm-12 p-0 d-flex flex-column">
+        <label class="text-primary font-weight-light mb-1 d-block" style="font-size: 16px">Age max: </label>
+        <input type="number" min="99" class="form-control col-12" name="maxAge" [(ngModel)]="maxAge" />
+      </div>
+      <div class="col-md-2 col-sm-12 p-0 d-flex flex-column">
+        <label class="text-primary font-weight-light mb-1 d-block" style="font-size: 16px">Gender: </label>
+        <select class="form-control col-12" name="gender" [(ngModel)]="gender" >
+          <option value="">All</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <button type="submit" class="btn p-2 rounded-circle btn-success mt-4">
+          <i class="fa fa-search" style="font-size: 20px"></i>
+        </button>
+      </div>
+    </form>
+  </div>
   <div class="row">
     <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6 mb-3">
       <app-member-card [user]="user"></app-member-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="m-auto">
+      <pagination [totalItems]="paginationInfo.totalItems"
+                  [itemsPerPage]="paginationInfo.itemsPerPage"
+                  [(ngModel)]="paginationInfo.currentPage"
+                  (pageChanged)="pageChanges($event)">
+      </pagination>
     </div>
   </div>
 </div>

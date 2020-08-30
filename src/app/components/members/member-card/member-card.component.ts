@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../models/user';
+import {UserService} from '../../../services/user.service';
+import {AlertifyService} from '../../../services/alertify.service';
 
 @Component({
   selector: 'app-member-card',
@@ -9,10 +11,15 @@ import {User} from '../../../models/user';
 export class MemberCardComponent implements OnInit {
 
   @Input() user: User;
-  constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.user);
+  constructor(private userService: UserService, private alertify: AlertifyService) {
   }
 
+  ngOnInit(): void {
+  }
+
+  addLike(recipentId: number): void {
+    this.userService.giveLike(recipentId)
+      .subscribe(next => {}, error => this.alertify.error(error));
+  }
 }

@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {NavComponent} from './components/nav/nav.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from './services/auth.service';
 import {HomeComponent} from './components/home/home.component';
 import {SignupComponent} from './components/signup/signup.component';
@@ -27,6 +27,10 @@ import { MemberUpdateComponent } from './components/members/member-update/member
 import {MemberUpdateResolver} from './resolvers/mermber-update.resolver';
 import { PhotoEditorComponent } from './components/members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {TimeagoModule} from 'ngx-timeago';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
+import {ListResolver} from './resolvers/list.resolver';
 
 // tslint:disable-next-line:typedef
 export function tokenGetter() {
@@ -50,8 +54,11 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     HttpClientModule,
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
     FormsModule,
     FileUploadModule,
+    TimeagoModule.forRoot(),
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
@@ -63,7 +70,8 @@ export function tokenGetter() {
         allowedDomains: ['localhost:5000'],
         disallowedRoutes: ['localhost:5000/api/auth']
       }
-    })
+    }),
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,
@@ -71,7 +79,8 @@ export function tokenGetter() {
     AlertifyService,
     MemberDetailResolver,
     MembersResolver,
-    MemberUpdateResolver
+    MemberUpdateResolver,
+    ListResolver
   ],
   bootstrap: [AppComponent]
 })

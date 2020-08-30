@@ -1,1 +1,27 @@
-<p>lists works!</p>
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12 text-center">
+      <h3>List likees and likers</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <button class="btn mr-2" [ngClass]="likees ? 'btn-primary': 'btn-outline-primary'"
+              (click)="loadUsersInfo(true)">Likees
+      </button>
+      <button class="btn" [ngClass]="likers ? 'btn-primary': 'btn-outline-primary'" (click)="loadUsersInfo(false)">Likers</button>
+    </div>
+    <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6 mb-3">
+      <app-member-card [user]="user"></app-member-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="m-auto">
+      <pagination [totalItems]="paginationInfo.totalItems"
+                  [itemsPerPage]="paginationInfo.itemsPerPage"
+                  [(ngModel)]="paginationInfo.currentPage"
+                  (pageChanged)="pageChanges($event)">
+      </pagination>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ import {catchError} from 'rxjs/operators';
 
 
 @Injectable()
-export class MembersResolver implements Resolve<User[]> {
+export class ListResolver implements Resolve<User[]> {
   constructor(
     private userService: UserService,
     private router: Router,
@@ -18,7 +18,7 @@ export class MembersResolver implements Resolve<User[]> {
 
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    return this.userService.getUsers(1, 8, 18, 99, null).pipe(
+    return this.userService.getUsers(1, 8, 18, 99, null, true, null).pipe(
       catchError(error => {
         this.alertify.error('Problems retrieving the data');
         this.router.navigate(['/']);

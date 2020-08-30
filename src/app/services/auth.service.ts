@@ -27,18 +27,20 @@ export class AuthService {
       .pipe(
         map((response: any) => {
           const user = response;
+          console.log(response);
           if (user) {
             const {email, id, image} = user;
+            console.log(email);
             localStorage.setItem('token', user.token);
-            localStorage.setItem('user', JSON.stringify({email, id, image: image.url}));
+            localStorage.setItem('user', JSON.stringify({email, id, image: (image) ? image.url : '../../assets/user.png' }));
             this.currentUser =
               {
                 email,
                 id,
-                image: image.url
+                image: (image) ? image.url : '../../assets/user.png'
               };
 
-            this.changeMemberPhoto(image.url);
+            this.changeMemberPhoto( (image) ? image.url : '../../assets/user.png');
           }
         })
       );
