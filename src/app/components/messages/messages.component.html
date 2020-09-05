@@ -1,1 +1,54 @@
-<p>messages works!</p>
+<div class="btn-group mb-4" btnRadioGroup [(ngModel)]="messageContainer">
+  <button class="btn btn-primary"  btnCheckbox ngDefaultControl btnRadio="Unread"
+          (click)="loadMessages()">
+    <i class="fa fa-envelope"></i> Unread
+  </button>
+  <button class="btn btn-primary" btnCheckbox ngDefaultControl btnRadio="Inbox"
+          (click)="loadMessages()">
+    <i class="fa fa-envelope-open"></i> Inbox
+  </button>
+  <button class="btn btn-primary" btnCheckbox ngDefaultControl btnRadio="Outbox"
+          (click)="loadMessages()">
+    <i class="fa fa-paper-plane"></i> Outbox
+  </button>
+</div>
+
+<table class="table table-hover" style="cursor: pointer">
+  <tr>
+    <th style="width: 20%">From / To</th>
+    <th style="width: 40%">Message</th>
+    <th style="width: 20%">Sent / Received</th>
+    <th style="width: 20%"></th>
+  </tr>
+  <tr *ngFor="let message of messages" [routerLink]="['/members/detail',
+        messageContainer == 'Outbox' ? message.recipientId : message.senderId]">
+    <td>
+      <div *ngIf="messageContainer != 'Outbox'">
+        <img [src]="message.senderPhotoUrl" width="40" height="40" class="rounded-circle mr-2">
+        <strong>{{message.senderKnownAs}}</strong>
+      </div>
+      <div *ngIf="messageContainer == 'Outbox'">
+        <img [src]="message.recipientPhotoUrl" width="40" height="40" class="rounded-circle mr-2">
+        <strong>{{message.recipientKnownAs}}</strong>
+      </div>
+    </td>
+    <td>{{message.content}}</td>
+    <td><strong>{{message.messageSent | timeago}}</strong></td>
+    <td>
+      <button class="btn btn-danger">Delete</button>
+    </td>
+  </tr>
+</table>
+
+<!-- pagination -->
+
+<div class="row">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+                (pageChanged)="pageChanged($event)"
+                [(ngModel)]="pagination.currentPage"
+                class="pagination-sm m-auto" previousText="&lsaquo;" nextText="&rsaquo;"
+                firstText="&laquo;"
+                lastText="&raquo;"></pagination>
+</div>
+
+

@@ -31,6 +31,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import {TimeagoModule} from 'ngx-timeago';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 import {ListResolver} from './resolvers/list.resolver';
+import {MessagesResolver} from './resolvers/messages.resolver';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { MessagesThreadComponent } from './components/messages/messages-thread/messages-thread.component';
 
 // tslint:disable-next-line:typedef
 export function tokenGetter() {
@@ -49,7 +52,8 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberUpdateComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    MessagesThreadComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +68,7 @@ export function tokenGetter() {
     RouterModule.forRoot(appRoutes),
     TabsModule.forRoot(),
     NgxGalleryModule,
+    ButtonsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
@@ -80,6 +85,7 @@ export function tokenGetter() {
     MemberDetailResolver,
     MembersResolver,
     MemberUpdateResolver,
+    MessagesResolver,
     ListResolver
   ],
   bootstrap: [AppComponent]

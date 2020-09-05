@@ -29,15 +29,17 @@
       </div>
     </div>
     <div class="col-sm-8">
-        <tabset>
-          <tab heading="Basic title" id="tab1">
+        <tabset #staticOptions>
+          <tab heading="About me" id="tab1">
             <p class="font-weight-bold mb-2 mt-4">Interests</p>
             <p class="text-justify mb-2">{{user.interests}}</p>
             <p class="font-weight-bold mb-2">Introduction</p>
             <p class="text-justify">{{user.introduction}}</p>
           </tab>
           <tab heading="Photos"><ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery></tab>
-          <tab heading="Basic Title 2">Basic content 2</tab>
+          <tab heading="Messages">
+            <app-messages-thread [recipientId]="user.id"></app-messages-thread>
+          </tab>
         </tabset>
     </div>
   </div>

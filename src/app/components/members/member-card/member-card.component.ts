@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../models/user';
 import {UserService} from '../../../services/user.service';
 import {AlertifyService} from '../../../services/alertify.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-member-card',
@@ -12,7 +13,8 @@ export class MemberCardComponent implements OnInit {
 
   @Input() user: User;
 
-  constructor(private userService: UserService, private alertify: AlertifyService) {
+  constructor(private userService: UserService,
+              private alertify: AlertifyService) {
   }
 
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class MemberCardComponent implements OnInit {
 
   addLike(recipentId: number): void {
     this.userService.giveLike(recipentId)
-      .subscribe(next => {}, error => this.alertify.error(error));
+      .subscribe(next => {
+      }, error => this.alertify.error(error));
   }
 }

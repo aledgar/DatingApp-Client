@@ -9,19 +9,30 @@
       <button class="btn mr-2" [ngClass]="likees ? 'btn-primary': 'btn-outline-primary'"
               (click)="loadUsersInfo(true)">Likees
       </button>
-      <button class="btn" [ngClass]="likers ? 'btn-primary': 'btn-outline-primary'" (click)="loadUsersInfo(false)">Likers</button>
-    </div>
-    <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6 mb-3">
-      <app-member-card [user]="user"></app-member-card>
+      <button class="btn" [ngClass]="likers ? 'btn-primary': 'btn-outline-primary'" (click)="loadUsersInfo(false)">
+        Likers
+      </button>
     </div>
   </div>
-  <div class="row">
-    <div class="m-auto">
-      <pagination [totalItems]="paginationInfo.totalItems"
-                  [itemsPerPage]="paginationInfo.itemsPerPage"
-                  [(ngModel)]="paginationInfo.currentPage"
-                  (pageChanged)="pageChanges($event)">
-      </pagination>
+  <div *ngIf="users.length">
+    <div class="row">
+      <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6 mb-3">
+        <app-member-card [user]="user"></app-member-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="m-auto">
+        <pagination [totalItems]="paginationInfo.totalItems"
+                    [itemsPerPage]="paginationInfo.itemsPerPage"
+                    [(ngModel)]="paginationInfo.currentPage"
+                    (pageChanged)="pageChanges($event)">
+        </pagination>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!users.length" class="row">
+    <div class="alert-warning p-2 text-white m-auto text-center col-3">
+      {{'We did not find anything'}} <i class="fa fa-search"></i>
     </div>
   </div>
 </div>

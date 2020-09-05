@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../services/user.service';
 import {User} from '../../../models/user';
 import {ActivatedRoute} from '@angular/router';
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions} from '@kolkov/ngx-gallery';
+import {TabsetComponent} from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-member-detail',
@@ -11,6 +12,7 @@ import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions} from '@kolkov/n
 })
 export class MemberDetailComponent implements OnInit {
 
+  @ViewChild('staticOptions', {static: true}) sectionTabs: TabsetComponent;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   public user: User;
@@ -21,6 +23,14 @@ export class MemberDetailComponent implements OnInit {
   ngOnInit(): void {
     this.router.data.subscribe(data => {
       this.user = data['user'];
+    });
+
+    this.router.queryParamMap.subscribe(params => {
+      if (params.get('messages')) {
+        if (+params.get('messages') === 2) {
+          this.sectionTabs.tabs[2].active = true;
+        }
+      }
     });
 
     this.galleryOptions = [

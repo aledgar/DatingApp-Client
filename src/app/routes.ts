@@ -12,6 +12,7 @@ import {MemberUpdateResolver} from './resolvers/mermber-update.resolver';
 import {PreventUnsavedChangesGuard} from './guards/prevent-unsaved-changes.guard';
 import {UpdateMemberGuard} from './guards/update-member.guard';
 import {ListResolver} from './resolvers/list.resolver';
+import {MessagesResolver} from './resolvers/messages.resolver';
 
 
 export const appRoutes: Routes = [
@@ -30,7 +31,7 @@ export const appRoutes: Routes = [
         canDeactivate: [PreventUnsavedChangesGuard],
         resolve: {user: MemberUpdateResolver}
       },
-      {path: 'messages', component: MessagesComponent},
+      {path: 'messages', component: MessagesComponent, resolve: {messages: MessagesResolver}},
       {path: 'lists', component: ListsComponent, resolve: {users: ListResolver}}
     ]
   },
