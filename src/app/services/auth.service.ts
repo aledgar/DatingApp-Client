@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  changeMemberPhoto(photoUrl: string) {
+  changeMemberPhoto(photoUrl: string): void {
     this.photoUrl.next(photoUrl);
   }
 
@@ -26,21 +26,20 @@ export class AuthService {
     return this.http.post(`${environment.url}/api/auth/login`, model)
       .pipe(
         map((response: any) => {
-          const user = response;
-          console.log(response);
-          if (user) {
-            const {email, id, image} = user;
+
+          if (response) {
+            const {email, id, photoUrl} = response.user;
             console.log(email);
-            localStorage.setItem('token', user.token);
-            localStorage.setItem('user', JSON.stringify({email, id, image: (image) ? image.url : '../../assets/user.png' }));
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify({email, id, image: (photoUrl) ? photoUrl : '../../assets/user.png'}));
             this.currentUser =
               {
                 email,
                 id,
-                image: (image) ? image.url : '../../assets/user.png'
+                image: (photoUrl) ? photoUrl : '../../assets/user.png'
               };
 
-            this.changeMemberPhoto( (image) ? image.url : '../../assets/user.png');
+            this.changeMemberPhoto((photoUrl) ? photoUrl : '../../assets/user.png');
           }
         })
       );
@@ -51,7 +50,7 @@ export class AuthService {
   }
 
 
-  loggedIn() {
+  loggedIn(): boolean {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
   }
